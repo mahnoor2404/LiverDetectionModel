@@ -1,32 +1,23 @@
-Liver Tumor Detection Model
+---
+title: Liver Tumor Detection API
+emoji: 🩺
+colorFrom: purple
+colorTo: blue
+sdk: docker
+pinned: false
+---
 
-This project is a web-based application that uses a trained ResNet18 model to detect liver tumors from CT scan images.
+# Liver Tumor Detection API
 
-🔹 Features
-Upload CT scan image
-Predict tumor / non-tumor
-Deep learning model (ResNet18)
-🔹 Model File
+FastAPI backend for liver tumor detection using ResNet18 trained on the LiTS dataset.
 
-Due to GitHub file size limits, the trained model is uploaded separately.
+## Endpoints
+- `GET  /health`   — health check
+- `POST /predict`  — run detection on CT scan (NIfTI or image)
+- `POST /evaluate` — submit ground truth
+- `GET  /metrics`  — get evaluation metrics
+- `POST /reset_evaluation` — clear metrics
 
-Download the model from here:
-👉 Paste your Google Drive link here
-
-🔹 How to Run
-Clone the repository:
-git clone https://github.com/mahnoor2404/LiverDetectionModel.git
-Go to project folder:
-cd LiverDetectionModel
-Install requirements:
-pip install -r requirements.txt
-Download the model file and place it in the project folder
-Run the project:
-python main.py
-🔹 Requirements
-Python
-PyTorch
-FastAPI
-🔹 Author
-
-Mahnoor Khan
+## Environment Variables (set in Space Settings)
+- `HF_MODEL_REPO` — HuggingFace model repo ID (e.g. `yourname/lits_tumor_model_fixed.pth`)
+- `HF_TOKEN`      — required only if the model repo is private

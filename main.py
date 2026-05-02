@@ -1,6 +1,7 @@
 import os
 import json
 import torch
+from huggingface_hub import hf_hub_download
 import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import models
@@ -68,23 +69,22 @@ def load_model1():
     
     return model
 
+def get_model_path() -> str:
+    """Download model from HuggingFace Hub (cached after first run)."""
+    repo_id  = os.environ.get("HF_MODEL_REPO", "hashammubarak1/lits_tumor_model_fixed")
+    hf_token = os.environ.get("HF_TOKEN", None)
+    print(f"Loading model from HuggingFace Hub: {repo_id}")
+    path = hf_hub_download(
+        repo_id=repo_id,
+        filename="lits_tumor_model_fixed.pth",
+        token=hf_token,
+    )
+    print(f"Model ready at: {path}")
+    return path
+
 # Load model
 model = load_model1()
-model_path = os.path.join(MODEL_DIR, "lits_tumor_model_fixed.pth")
-
-# Try to find the model file in different locations
-if not os.path.exists(model_path):
-    # Check alternative locations
-    alt_paths = [
-        os.path.join(BASE_DIR, "lits_tumor_model_fixed.pth"),
-        os.path.join(BASE_DIR, "lits_tumor_model.pth"),
-        os.path.join(BASE_DIR, "model", "best_model.pth"),
-    ]
-    for alt in alt_paths:
-        if os.path.exists(alt):
-            model_path = alt
-            break
-
+model_path = get_model_path()
 print(f"Loading model from: {model_path}")
 state_dict = torch.load(model_path, map_location=device, weights_only=False)
 
@@ -736,4 +736,4 @@ if __name__ == "__main__":
     print("  - ResNet18 with frozen early layers")
     print("  - Dropout(0.5) + Linear(256) + ReLU + Dropout(0.3) + Linear(2)")
     print("=" * 50 + "\n")
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=7860)
