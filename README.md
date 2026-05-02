@@ -1,23 +1,37 @@
----
-title: Liver Tumor Detection API
-emoji: 🩺
-colorFrom: purple
-colorTo: blue
-sdk: docker
-pinned: false
----
+# Liver Tumor Detection System
 
-# Liver Tumor Detection API
+AI-powered liver tumor detection from CT scans using deep learning (ResNet18, LiTS dataset).
 
-FastAPI backend for liver tumor detection using ResNet18 trained on the LiTS dataset.
+## Project Structure
 
-## Endpoints
-- `GET  /health`   — health check
-- `POST /predict`  — run detection on CT scan (NIfTI or image)
-- `POST /evaluate` — submit ground truth
-- `GET  /metrics`  — get evaluation metrics
-- `POST /reset_evaluation` — clear metrics
+```
+├── backend/    FastAPI server — deployed to HuggingFace Spaces (Docker)
+└── frontend/   Next.js web app — Firebase Auth + Firestore
+```
 
-## Environment Variables (set in Space Settings)
-- `HF_MODEL_REPO` — HuggingFace model repo ID (e.g. `yourname/lits_tumor_model_fixed.pth`)
-- `HF_TOKEN`      — required only if the model repo is private
+## Quick Start
+
+### Backend
+Deployed at: `https://hashammubarak1-liver-tumor-detection-api.hf.space`
+
+To run locally:
+```bash
+cd backend
+pip install -r requirements.txt
+python main.py
+```
+
+### Frontend
+```bash
+cd frontend
+cp .env.local.example .env.local   # fill in Firebase credentials
+npm install
+npm run dev
+```
+
+## Tech Stack
+- **Model**: ResNet18 (PyTorch), trained on LiTS dataset, frozen early layers
+- **Detection logic**: 70% slice threshold + 11% affected ratio cutoff
+- **Backend**: FastAPI, deployed to HuggingFace Spaces (Docker)
+- **Frontend**: Next.js, React, Tailwind CSS v4, TypeScript
+- **Auth & DB**: Firebase Authentication + Firestore
