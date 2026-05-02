@@ -1,32 +1,37 @@
-Liver Tumor Detection Model
+# Liver Tumor Detection System
 
-This project is a web-based application that uses a trained ResNet18 model to detect liver tumors from CT scan images.
+AI-powered liver tumor detection from CT scans using deep learning (ResNet18, LiTS dataset).
 
-🔹 Features
-Upload CT scan image
-Predict tumor / non-tumor
-Deep learning model (ResNet18)
-🔹 Model File
+## Project Structure
 
-Due to GitHub file size limits, the trained model is uploaded separately.
+```
+├── backend/    FastAPI server — deployed to HuggingFace Spaces (Docker)
+└── frontend/   Next.js web app — Firebase Auth + Firestore
+```
 
-Download the model from here:
-👉 Paste your Google Drive link here
+## Quick Start
 
-🔹 How to Run
-Clone the repository:
-git clone https://github.com/mahnoor2404/LiverDetectionModel.git
-Go to project folder:
-cd LiverDetectionModel
-Install requirements:
+### Backend
+Deployed at: `https://hashammubarak1-liver-tumor-detection-api.hf.space`
+
+To run locally:
+```bash
+cd backend
 pip install -r requirements.txt
-Download the model file and place it in the project folder
-Run the project:
 python main.py
-🔹 Requirements
-Python
-PyTorch
-FastAPI
-🔹 Author
+```
 
-Mahnoor Khan
+### Frontend
+```bash
+cd frontend
+cp .env.local.example .env.local   # fill in Firebase credentials
+npm install
+npm run dev
+```
+
+## Tech Stack
+- **Model**: ResNet18 (PyTorch), trained on LiTS dataset, frozen early layers
+- **Detection logic**: 70% slice threshold + 11% affected ratio cutoff
+- **Backend**: FastAPI, deployed to HuggingFace Spaces (Docker)
+- **Frontend**: Next.js, React, Tailwind CSS v4, TypeScript
+- **Auth & DB**: Firebase Authentication + Firestore

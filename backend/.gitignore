@@ -1,0 +1,8 @@
+*.pth
+__pycache__/
+*.pyc
+venv/
+.env
+fix_model_once.py
+inference.py
+test_api.py
